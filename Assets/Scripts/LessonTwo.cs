@@ -1,32 +1,23 @@
 using UnityEngine;
+using System;
 
-public class Transformation : MonoBehaviour
+public class LessonTwo : MonoBehaviour
 {
-
     public Vector2 localCoord;
     public Vector2 worldCoord;
     
     
     public void OnDrawGizmos()
     {
-        // Local → World 
-        Vector2 worldFromLocal = LocalToWorld(localCoord);
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(worldFromLocal, 0.1f);
-
-        // World → Local 
-        Vector2 localFromWorld = WorldToLocal(worldCoord);
-        Gizmos.DrawLine(worldCoord,localFromWorld);
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(localFromWorld , 0.1f);
         
-        // True world reference
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(worldCoord, 0.1f);
+        Matrix4x4 localToWorldMtx = transform.localToWorldMatrix;
+        
+        // Transforming between local and world
+        // transform.TransformPoint()         // M*(v.x,v.y,v.z,1)
+        // transform.InverseTransformPoint()  // M^1*(v.x,v.y,v.z,1)
+        // transform.TransformVector()        // M*(v.x,v.y,v.z,0)
+        // transform.InverseTransformVector() // M^1*(v.x,v.y,v.z,0)
 
-        // World origin
-        Gizmos.color = Color.white;
-        Gizmos.DrawSphere(Vector3.zero, 0.1f);
     }
     
 
@@ -45,5 +36,6 @@ public class Transformation : MonoBehaviour
         position += localCoord.y * (Vector2) transform.up; // y axis
         return position;
     }
+    
     
 }
