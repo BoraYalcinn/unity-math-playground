@@ -9,13 +9,28 @@ public class Transformation : MonoBehaviour
     
     public void OnDrawGizmos()
     {
-        Vector2 worldPos = LocalToWorld(localCoord);
-        Gizmos.DrawSphere(worldPos, 0.1f);
-        
-        Vector2 localPos = WorldToLocal(worldCoord);
-        Gizmos.DrawSphere(localPos,0.1f);
+        // Local → World 
+        Vector2 worldFromLocal = LocalToWorld(localCoord);
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(worldFromLocal, 0.1f);
 
+        // World → Local 
+        
+        Vector2 localFromWorld = WorldToLocal(worldCoord);
+        Gizmos.DrawLine(worldCoord,localFromWorld);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(localFromWorld , 0.1f);
+        
+
+        // True world reference
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(worldCoord, 0.1f);
+
+        // World origin
+        Gizmos.color = Color.white;
+        Gizmos.DrawSphere(Vector3.zero, 0.1f);
     }
+    
 
     Vector2 WorldToLocal(Vector2 worldPos)
     {
