@@ -18,9 +18,6 @@ public class LaserBounce : MonoBehaviour
         
         Gizmos.DrawLine(origin, origin + direction);
         
-        
-        
-        
 
         int bounceCount = 0;
         while (bounceCount < maxBounces)
@@ -36,7 +33,7 @@ public class LaserBounce : MonoBehaviour
                 direction = ReflectVector(hit.normal, direction);
 
                 // move origin slightly forward to avoid self-hit
-                origin = hit.point + direction * 0.001f;
+                origin = hit.point + (Vector3) direction * 0.001f;
 
                 bounceCount++;
             }
