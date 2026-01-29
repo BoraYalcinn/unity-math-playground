@@ -35,7 +35,13 @@ public class LessonOne : MonoBehaviour
         Gizmos.DrawSphere(NormalizedB, 0.05f);
         
         // Scalar Projection
-
+        scProj = Vector2.Dot(NormalizedA, b);
+        
+        // Vector Projection
+        Vector2 vecProj = NormalizedA * scProj;
+        
+        Gizmos.color = Color.white;
+        Gizmos.DrawSphere(vecProj, 0.05f);
     }
     
     
