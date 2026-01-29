@@ -5,7 +5,8 @@ using UnityEngine.PlayerLoop;
 
 public class LaserBounce : MonoBehaviour
 {
-
+    public int maxBounces = 10;
+    public float maxDistance = 100.0f;
 
     public void OnDrawGizmos()
     {
@@ -19,22 +20,40 @@ public class LaserBounce : MonoBehaviour
         
         
         
-        if (Physics.Raycast(ray,out RaycastHit hit))
+        
+
+        int bounceCount = 0;
+        while (bounceCount < maxBounces)
         {
-            Gizmos.DrawSphere(hit.point,0.1f);
-            // Vector2 reflection = direction + (hit.normal * (-2) * Vector2.Dot(direction, hit.normal));  ***formula for the reflection***
-            // writing a seperate function for calculating the reflection vector will be much more useful 
-            Vector2 reflection = ReflectVector(hit.normal,ray.direction);
-            // there is also a built-in reflect function also but I will not be using it
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(hit.point, (Vector2) hit.point + reflection);
+            if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance))
+            {
+                // draw incoming segment
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(origin, hit.point);
+                Gizmos.DrawSphere(hit.point, 0.05f);
+
+                // reflect
+                direction = ReflectVector(hit.normal, direction);
+
+                // move origin slightly forward to avoid self-hit
+                origin = hit.point + direction * 0.001f;
+
+                bounceCount++;
+            }
+            else
+            {
+                // no hit → draw remaining laser and exit
+                Gizmos.DrawLine(origin, origin + direction * maxDistance);
+                break;
+            }
         }
         
     }
 
-    Vector2 ReflectVector(Vector2 normal, Vector2 direction)
+    Vector3 ReflectVector(Vector3 normal, Vector3 direction)
     {
-        return direction + (normal * (-2) * Vector2.Dot(direction, normal));
+        return direction - 2f * Vector3.Dot(direction, normal) * normal;
     }
+
     
 }
