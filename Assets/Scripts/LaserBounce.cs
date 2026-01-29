@@ -5,7 +5,7 @@ using UnityEngine.PlayerLoop;
 
 public class LaserBounce : MonoBehaviour
 {
-    public int maxBounces = 10;
+    public int maxBounces = 5;
     public float maxDistance = 100.0f;
 
     public void OnDrawGizmos()
@@ -32,7 +32,7 @@ public class LaserBounce : MonoBehaviour
                 // reflect
                 direction = ReflectVector(hit.normal, direction);
 
-                // move origin slightly forward to avoid self-hit
+                // update origin
                 origin = hit.point + (Vector3) direction * 0.001f;
 
                 bounceCount++;
