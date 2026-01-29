@@ -27,7 +27,7 @@ public class LaserBounce : MonoBehaviour
             Vector2 reflection = ReflectVector(hit.normal,ray.direction);
             // there is also a built-in reflect function also but I will not be using it
             Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(hit.point, hit.point + reflection);
+            Gizmos.DrawLine(hit.point, (Vector2) hit.point + reflection);
         }
         
     }
