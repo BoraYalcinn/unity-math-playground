@@ -27,8 +27,9 @@ public class LessonTwo : MonoBehaviour
     Vector2 WorldToLocal(Vector2 worldPos)
     {
 		// Matrix4x4 mtx = Matrix4x4.TRS(new Vector3(2,5,6), Quaternion.identity, Vector3.one);
-		return transform.InverseTransformationPoint(worldPos);
-		
+		return transform.InverseTransformPoint(worldPos);
+
+	
         // Vector2 rel = worldPos - (Vector2)transform.position;
         // float x = Vector2.Dot(rel, transform.right); // x axis
         // float y = Vector2.Dot(rel, transform.up); // y axis
