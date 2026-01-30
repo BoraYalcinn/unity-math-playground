@@ -9,9 +9,12 @@ public class LessonTwo : MonoBehaviour
     
     public void OnDrawGizmos()
     {
+		
         
         Matrix4x4 localToWorldMtx = transform.localToWorldMatrix;
         
+		// localToWorldMtx.MultiplyPoint3x4() // faster
+
         // Transforming between local and world
         // transform.TransformPoint()         // M*(v.x,v.y,v.z,1)
         // transform.InverseTransformPoint()  // M^1*(v.x,v.y,v.z,1)
@@ -23,10 +26,13 @@ public class LessonTwo : MonoBehaviour
 
     Vector2 WorldToLocal(Vector2 worldPos)
     {
-        Vector2 rel = worldPos - (Vector2)transform.position;
-        float x = Vector2.Dot(rel, transform.right); // x axis
-        float y = Vector2.Dot(rel, transform.up); // y axis
-        return new(x,y);
+		// Matrix4x4 mtx = Matrix4x4.TRS(new Vector3(2,5,6), Quaternion.identity, Vector3.one);
+		return transform.InverseTransformationPoint(worldPos);
+		
+        // Vector2 rel = worldPos - (Vector2)transform.position;
+        // float x = Vector2.Dot(rel, transform.right); // x axis
+        // float y = Vector2.Dot(rel, transform.up); // y axis
+        // return new(x,y);
     }
     
     Vector2 LocalToWorld(Vector2 localCoord)
