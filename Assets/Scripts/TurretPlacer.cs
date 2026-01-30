@@ -47,7 +47,9 @@ public class TurretPlacer : MonoBehaviour
 
             Gizmos.color = Color.white;
             Gizmos.DrawLine(ray.origin,hit.point);
-            
+
+            turret.rotation = Quaternion.LookRotation(xAxis, yAxis); // now our turret is always facing the right direction
+
         }
 
     }
