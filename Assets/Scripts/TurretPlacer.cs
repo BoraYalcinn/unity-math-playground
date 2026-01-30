@@ -20,7 +20,8 @@ public class TurretPlacer : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            turret.transform.position = hit.point;
+            
+            turret.transform.position = hit.point + hit.normal * 0.2050f; // addded offset too fix the half of the objet being inside currently it is hardcoded 
             /*
               turret.rotation = Quaternion.LookRotation(ray.direction);
             */
