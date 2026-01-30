@@ -31,6 +31,8 @@ public class TurretPlacer : MonoBehaviour
             // don't want . In this case we cann apply cross product with the surface which will give us another
             // vector thats perpendicular.
 
+            
+            // the following steps are called gramdt-schmidt method
             Vector3 yAxis = hit.normal;
             Vector3 xAxis = Vector3.Cross(yAxis,ray.direction);
             xAxis = xAxis.normalized; // normalize this so that it always has a spesific length
@@ -49,7 +51,7 @@ public class TurretPlacer : MonoBehaviour
             Gizmos.color = Color.white;
             Gizmos.DrawLine(ray.origin,hit.point);
 
-            turret.rotation = Quaternion.LookRotation(xAxis, yAxis); // now our turret is always facing the right direction
+            turret.rotation = Quaternion.LookRotation(zAxis, yAxis); // now our turret is always facing the right direction
 
         }
 
