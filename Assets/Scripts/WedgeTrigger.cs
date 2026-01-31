@@ -21,9 +21,15 @@ public class WedgeTrigger : MonoBehaviour
         Vector3 up = transform.up;
 
         Vector3 top = origin + up * height;
+
+        bool isInside = Contains(target.position);
+        Color c = isInside ? Color.red : Color.green;
+        Gizmos.color = c;
+        Handles.color = c;
         
-        Handles.DrawWireDisc(origin,up,radius);
-        Handles.DrawWireDisc(top,up,radius);
+        Handles.DrawWireDisc(origin, up, radius);
+        Handles.DrawWireDisc(top, up, radius);
+        
 
         float p = angThreshold;
         float x = Mathf.Sqrt(1-p*p);
@@ -53,6 +59,33 @@ public class WedgeTrigger : MonoBehaviour
 
     }
 
+    bool Contains(Vector3 position)
+    {   
+        Vector3 origin = transform.position;   
+        Vector3 toPoint = position - origin;
+         
+        
+        // height check
+        float h = Vector3.Dot(toPoint, transform.up);
+        if (h < 0 || h > height)
+            return false;
+
+        // radial check
+        Vector3 radial = toPoint - transform.up * h;
+        if (radial.sqrMagnitude > radius * radius)
+            return false;
+
+        // angular check
+        if (radial.sqrMagnitude > 0f)
+        {
+            float dot = Vector3.Dot(radial.normalized, transform.forward);
+            if (dot < angThreshold)
+                return false;
+        }
+
+        return true;
+        
+    }
     
     
 }
