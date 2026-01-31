@@ -40,7 +40,16 @@ public class WedgeTrigger : MonoBehaviour
         Gizmos.DrawLine(top,origin);
         Gizmos.DrawLine(origin + vLeft, top + vLeft);
         Gizmos.DrawLine(origin + vRight, top + vRight);
-
+        
+        /*
+         *  WE COULD'VE SIMPLIFIED ALL THIS BY:
+         *  Gizmos.matrix = transform.localToWorldMatrix;
+         *  this would've simplified a lot because now we don't need to write our code
+         *  so that the gizmos will follow this line of code will just set the origin to 0
+         *  Gizmos.DrawSphere(Vector3.zero,0.1f);
+         *
+         */
+        
 
     }
 
