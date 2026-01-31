@@ -28,12 +28,19 @@ public class WedgeTrigger : MonoBehaviour
         float p = angThreshold;
         float x = Mathf.Sqrt(1-p*p);
 
-        Vector3 vLeft = transform.forward * p + transform.right * (-x);
-        Vector3 vRight = transform.forward * p + transform.right * x;
+        Vector3 vLeft = (transform.forward * p + transform.right * (-x)) * radius;
+        Vector3 vRight = (transform.forward * p + transform.right * x) * radius;
         
         
         Gizmos.DrawRay(origin,vRight);
         Gizmos.DrawRay(origin,vLeft);
+        Gizmos.DrawRay(top,vRight);
+        Gizmos.DrawRay(top,vLeft);
+        
+        Gizmos.DrawLine(top,origin);
+        Gizmos.DrawLine(origin + vLeft, top + vLeft);
+        Gizmos.DrawLine(origin + vRight, top + vRight);
+
 
     }
 
