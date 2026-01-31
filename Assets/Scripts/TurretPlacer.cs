@@ -5,6 +5,15 @@ using System.Collections.Generic;
 
 public class TurretPlacer : MonoBehaviour
 {
+	/*
+		ASSIGNMENTS
+
+		1- Turret Alignment
+		2- Turret Trigger
+		3- Turret Look & Fire
+
+	*/	
+
 
     public Transform turret;
     
