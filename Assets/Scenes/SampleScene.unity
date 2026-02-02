@@ -2904,7 +2904,7 @@ MonoBehaviour:
   target: {fileID: 1986204872}
   radius: 1.28
   height: 0.55
-  angThreshold: 0.7
+  angThreshold: 0.76
 --- !u!4 &1603210817
 Transform:
   m_ObjectHideFlags: 0
@@ -3359,7 +3359,7 @@ Transform:
   m_GameObject: {fileID: 1986204871}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.99, y: 0.392, z: 0.927}
+  m_LocalPosition: {x: 2.135, y: 0.392, z: 1.045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
