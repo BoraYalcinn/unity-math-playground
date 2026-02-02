@@ -26,6 +26,8 @@ public class WedgeTrigger : MonoBehaviour
         Color c = isInside ? Color.red : Color.green;
         Gizmos.color = c;
         Handles.color = c;
+
+        // Quaternion up90 = Quaternion.AngleAxis(90, Vector3.up);
         
         Handles.DrawWireDisc(origin, up, radius);
         Handles.DrawWireDisc(top, up, radius);
