@@ -1,4 +1,4 @@
-Unity Math Playground
+# Unity Math Playground
 
 This repo is dedicated to learning Unity and Math for games using the Unity Engine it is covering related topics and examples given below.
 And as the learning sources I have used Freya Holmer ,3Blue1Brown and mostly my Linear Algebra knowledge from my University Course (MATH 221)
