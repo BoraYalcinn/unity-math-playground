@@ -10,10 +10,11 @@ public class WedgeTrigger : MonoBehaviour
 {
     public Transform target;    
     
-    public float radius;
-    public float height;
-    [Range(0,1)]
-    public float angThreshold;
+    public float radiusOuter = 2f;
+    public float radiusInner = 0.5f;
+    public float height = 2f;
+    [Range(0,180)]
+    public float angle = 90f;
     
     void OnDrawGizmos()
     {
@@ -29,6 +30,7 @@ public class WedgeTrigger : MonoBehaviour
 
         // Quaternion up90 = Quaternion.AngleAxis(90, Vector3.up);
         
+        /*
         Handles.DrawWireDisc(origin, up, radius);
         Handles.DrawWireDisc(top, up, radius);
         
@@ -48,6 +50,7 @@ public class WedgeTrigger : MonoBehaviour
         Gizmos.DrawLine(top,origin);
         Gizmos.DrawLine(origin + vLeft, top + vLeft);
         Gizmos.DrawLine(origin + vRight, top + vRight);
+        */
         
         /*
          *  WE COULD'VE SIMPLIFIED ALL THIS BY:
