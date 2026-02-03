@@ -33,6 +33,8 @@ public class WedgeTrigger : MonoBehaviour
         Vector3 leftDir  = Quaternion.AngleAxis(-half, up) * transform.forward;
         Vector3 rightDir = Quaternion.AngleAxis( half, up) * transform.forward;
         
+        DrawConeGizmo();
+        
         // Outer and Inner wedge vectors
         Vector3 vLeftOuter  = leftDir  * radiusOuter;
         Vector3 vRightOuter = rightDir * radiusOuter;
@@ -95,11 +97,46 @@ public class WedgeTrigger : MonoBehaviour
          *  so that the gizmos will follow this line of code will just set the origin to 0
          *  Gizmos.DrawSphere(Vector3.zero,0.1f);
          *
+         *
+         *    
+         *  >   <
          */
         
 
     }
 
+    void DrawConeGizmo()
+    {   
+        float half = angle * 0.5f;
+        Vector3 vLeftDir = new Vector3(-half, 0, half);
+        Vector3 vRightDir = new Vector3(half, 0, -half);
+        Vector3 vLeftOuter = vLeftDir * radiusOuter;
+        Vector3 vRightOuter = vRightDir * radiusOuter;
+        Vector3 vLeftInner = vLeftDir * radiusInner;
+        Vector3 vRightInner = vRightDir * radiusInner;
+        
+        
+        
+
+        void SetGizmoMatrix(Matrix4x4 m) => Gizmos.matrix = Handles.matrix = m;
+        Matrix4x4 prevMtx = Gizmos.matrix;
+        // draw the rotated Gizmo
+        SetGizmoMatrix(Gizmos.matrix *Matrix4x4.TRS(default,Quaternion.Euler(0,0,90),Vector3.one));
+        DrawFlatWedge();
+        SetGizmoMatrix(prevMtx);
+        
+
+        void DrawFlatWedge()
+        {
+            Handles.DrawWireArc(default,Vector3.up,vLeftOuter,angle, radiusOuter);
+            Handles.DrawWireArc(default,Vector3.up,vLeftInner,angle, radiusInner);
+            Gizmos.DrawLine(vLeftInner,vLeftOuter);
+            Gizmos.DrawLine(vRightInner,vRightOuter);
+        }
+        
+        
+    }
+    
     bool Contains(Vector3 position)
     {   
         Vector3 origin = transform.position;   
@@ -115,8 +152,7 @@ public class WedgeTrigger : MonoBehaviour
         Vector3 radial = toPoint - transform.up * h;
         float distSq = radial.sqrMagnitude;
 
-        if (distSq < radiusInner * radiusInner ||
-            distSq > radiusOuter * radiusOuter)
+        if (distSq < radiusInner * radiusInner || distSq > radiusOuter * radiusOuter)
             return false;
 
         // angular check
