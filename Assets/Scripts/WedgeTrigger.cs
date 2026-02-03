@@ -129,7 +129,8 @@ public class WedgeTrigger : MonoBehaviour
         SetGizmoMatrix(transform.localToWorldMatrix *Matrix4x4.TRS(default, Quaternion.Euler(0,0,90), Vector3.one));
         DrawFlatWedge();
         SetGizmoMatrix(prevMtx);
-        
+        // Up here Freya holmer used a stack implementation of these matrices where you can easily save the matrices by simply pushing and popping although it can be extremly useful I haven't implemented it
+        // here in my code since this is a repo mostly about the math behind it all
 
         void DrawFlatWedge()
         {
