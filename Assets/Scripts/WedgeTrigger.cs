@@ -28,7 +28,43 @@ public class WedgeTrigger : MonoBehaviour
         Gizmos.color = c;
         Handles.color = c;
 
-        // Quaternion up90 = Quaternion.AngleAxis(90, Vector3.up);
+        float half = angle * 0.5f;
+        
+        Vector3 leftDir  = Quaternion.AngleAxis(-half, up) * transform.forward;
+        Vector3 rightDir = Quaternion.AngleAxis( half, up) * transform.forward;
+        
+        // Outer and Inner wedge vectors
+        Vector3 vLeftOuter  = leftDir  * radiusOuter;
+        Vector3 vRightOuter = rightDir * radiusOuter;
+        
+        Vector3 vLeftInner  = leftDir  * radiusInner;
+        Vector3 vRightInner = rightDir * radiusInner;
+        
+        // edges
+        
+        Gizmos.DrawRay(origin, vLeftOuter);
+        Gizmos.DrawRay(origin, vRightOuter);
+        Gizmos.DrawRay(top, vLeftOuter);
+        Gizmos.DrawRay(top, vRightOuter);
+
+        Gizmos.DrawLine(origin + vLeftOuter, top + vLeftOuter);
+        Gizmos.DrawLine(origin + vRightOuter, top + vRightOuter);
+        
+        Gizmos.DrawRay(origin, vLeftInner);
+        Gizmos.DrawRay(origin, vRightInner);
+        Gizmos.DrawRay(top, vLeftInner);
+        Gizmos.DrawRay(top, vRightInner);
+
+        Gizmos.DrawLine(origin + vLeftInner, top + vLeftInner);
+        Gizmos.DrawLine(origin + vRightInner, top + vRightInner);
+        
+        // arcs
+        Vector3 startDir = leftDir;
+        Handles.DrawWireArc(origin, up, startDir, angle, radiusOuter);
+        Handles.DrawWireArc(origin, up, startDir, angle, radiusInner);
+        Handles.DrawWireArc(top, up, startDir, angle, radiusOuter);
+        Handles.DrawWireArc(top, up, startDir, angle, radiusInner);
+        
         
         /*
         Handles.DrawWireDisc(origin, up, radius);
@@ -77,14 +113,19 @@ public class WedgeTrigger : MonoBehaviour
 
         // radial check
         Vector3 radial = toPoint - transform.up * h;
-        if (radial.sqrMagnitude > radius * radius)
+        float distSq = radial.sqrMagnitude;
+
+        if (distSq < radiusInner * radiusInner ||
+            distSq > radiusOuter * radiusOuter)
             return false;
 
         // angular check
         if (radial.sqrMagnitude > 0f)
         {
-            float dot = Vector3.Dot(radial.normalized, transform.forward);
-            if (dot < angThreshold)
+            Vector3 forwardFlat = Vector3.ProjectOnPlane(transform.forward, transform.up).normalized;
+            float dot = Vector3.Dot(radial.normalized, forwardFlat);
+            float cosHalf = Mathf.Cos((angle * 0.5f) * Mathf.Deg2Rad);
+            if (dot < cosHalf)
                 return false;
         }
 
