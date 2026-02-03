@@ -110,6 +110,7 @@ public class WedgeTrigger : MonoBehaviour
     void DrawConeGizmo()
     {   
         float half = angle * 0.5f;
+        
         Vector3 vLeftDir  = Quaternion.AngleAxis(-half, Vector3.up) * Vector3.forward; 
         Vector3 vRightDir = Quaternion.AngleAxis( half, Vector3.up) * Vector3.forward; 
         
@@ -120,8 +121,12 @@ public class WedgeTrigger : MonoBehaviour
         
         
         void SetGizmoMatrix(Matrix4x4 m) => Gizmos.matrix = Handles.matrix = m;
-        //Horizontal
+        
+        // save
         Matrix4x4 prevMtx = Gizmos.matrix;
+        
+        //Horizontal
+        
         SetGizmoMatrix(transform.localToWorldMatrix); 
         DrawFlatWedge();
         SetGizmoMatrix(prevMtx);
@@ -131,7 +136,28 @@ public class WedgeTrigger : MonoBehaviour
         SetGizmoMatrix(prevMtx);
         // Up here Freya holmer used a stack implementation of these matrices where you can easily save the matrices by simply pushing and popping although it can be extremly useful I haven't implemented it
         // here in my code since this is a repo mostly about the math behind it all
+        
+        // so the distance from the center to the circle we are going to draw is distance = r * cos(halfAngle) by basic trigonometry and the
+        // diameter of that circle is 2 * r * sin(halfAngle) by again BASIC TRIGONOMETRY (DO I HAVE TO SAY THAT THE RADIUS WILL BE r * sin(halfAngle) ?! )
+        
+        // rings( the circle I've discussed above )
+        SetGizmoMatrix(transform.localToWorldMatrix *Matrix4x4.TRS(default, Quaternion.Euler(0,0,90), Vector3.one));
+        DrawRings(radiusOuter);
+        DrawRings(radiusInner);
+        SetGizmoMatrix(prevMtx);
+        
+        void DrawRings(float turretRadius)
+        {
+            float half = angle * 0.5f;
+            float halfRad = half * Mathf.Deg2Rad;
+            float dist = turretRadius * Mathf.Cos(halfRad);
+            float radius = turretRadius * Mathf.Sin(halfRad);
 
+            Vector3 center = new Vector3(0, 0, dist);
+            Handles.DrawWireDisc(center,Vector3.forward,radius);
+        }
+        
+        
         void DrawFlatWedge()
         {
             Handles.DrawWireArc(Vector3.zero,Vector3.up,vLeftDir,angle, radiusOuter);
