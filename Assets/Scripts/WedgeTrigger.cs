@@ -33,62 +33,63 @@ public class WedgeTrigger : MonoBehaviour
         Vector3 leftDir  = Quaternion.AngleAxis(-half, up) * transform.forward;
         Vector3 rightDir = Quaternion.AngleAxis( half, up) * transform.forward;
         
-        DrawConeGizmo();
-        
-        // Outer and Inner wedge vectors
-        Vector3 vLeftOuter  = leftDir  * radiusOuter;
-        Vector3 vRightOuter = rightDir * radiusOuter;
-        
-        Vector3 vLeftInner  = leftDir  * radiusInner;
-        Vector3 vRightInner = rightDir * radiusInner;
-        
-        // edges
-        
-        Gizmos.DrawRay(origin, vLeftOuter);
-        Gizmos.DrawRay(origin, vRightOuter);
-        Gizmos.DrawRay(top, vLeftOuter);
-        Gizmos.DrawRay(top, vRightOuter);
+         DrawConeGizmo();
+         /*
+          
+         // Outer and Inner wedge vectors
+         Vector3 vLeftOuter  = leftDir  * radiusOuter;
+         Vector3 vRightOuter = rightDir * radiusOuter;
 
-        Gizmos.DrawLine(origin + vLeftOuter, top + vLeftOuter);
-        Gizmos.DrawLine(origin + vRightOuter, top + vRightOuter);
-        
-        Gizmos.DrawRay(origin, vLeftInner);
-        Gizmos.DrawRay(origin, vRightInner);
-        Gizmos.DrawRay(top, vLeftInner);
-        Gizmos.DrawRay(top, vRightInner);
+         Vector3 vLeftInner  = leftDir  * radiusInner;
+         Vector3 vRightInner = rightDir * radiusInner;
 
-        Gizmos.DrawLine(origin + vLeftInner, top + vLeftInner);
-        Gizmos.DrawLine(origin + vRightInner, top + vRightInner);
-        
-        // arcs
-        Vector3 startDir = leftDir;
-        Handles.DrawWireArc(origin, up, startDir, angle, radiusOuter);
-        Handles.DrawWireArc(origin, up, startDir, angle, radiusInner);
-        Handles.DrawWireArc(top, up, startDir, angle, radiusOuter);
-        Handles.DrawWireArc(top, up, startDir, angle, radiusInner);
-        
-        
-        /*
-        Handles.DrawWireDisc(origin, up, radius);
-        Handles.DrawWireDisc(top, up, radius);
-        
+         // edges
 
-        float p = angThreshold;
-        float x = Mathf.Sqrt(1-p*p);
+         Gizmos.DrawRay(origin, vLeftOuter);
+         Gizmos.DrawRay(origin, vRightOuter);
+         Gizmos.DrawRay(top, vLeftOuter);
+         Gizmos.DrawRay(top, vRightOuter);
 
-        Vector3 vLeft = (transform.forward * p + transform.right * (-x)) * radius;
-        Vector3 vRight = (transform.forward * p + transform.right * x) * radius;
-        
-        
-        Gizmos.DrawRay(origin,vRight);
-        Gizmos.DrawRay(origin,vLeft);
-        Gizmos.DrawRay(top,vRight);
-        Gizmos.DrawRay(top,vLeft);
-        
-        Gizmos.DrawLine(top,origin);
-        Gizmos.DrawLine(origin + vLeft, top + vLeft);
-        Gizmos.DrawLine(origin + vRight, top + vRight);
-        */
+         Gizmos.DrawLine(origin + vLeftOuter, top + vLeftOuter);
+         Gizmos.DrawLine(origin + vRightOuter, top + vRightOuter);
+
+         Gizmos.DrawRay(origin, vLeftInner);
+         Gizmos.DrawRay(origin, vRightInner);
+         Gizmos.DrawRay(top, vLeftInner);
+         Gizmos.DrawRay(top, vRightInner);
+
+         Gizmos.DrawLine(origin + vLeftInner, top + vLeftInner);
+         Gizmos.DrawLine(origin + vRightInner, top + vRightInner);
+
+         // arcs
+         Vector3 startDir = leftDir;
+         Handles.DrawWireArc(origin, up, startDir, angle, radiusOuter);
+         Handles.DrawWireArc(origin, up, startDir, angle, radiusInner);
+         Handles.DrawWireArc(top, up, startDir, angle, radiusOuter);
+         Handles.DrawWireArc(top, up, startDir, angle, radiusInner);
+
+
+         /*
+         Handles.DrawWireDisc(origin, up, radius);
+         Handles.DrawWireDisc(top, up, radius);
+
+
+         float p = angThreshold;
+         float x = Mathf.Sqrt(1-p*p);
+
+         Vector3 vLeft = (transform.forward * p + transform.right * (-x)) * radius;
+         Vector3 vRight = (transform.forward * p + transform.right * x) * radius;
+
+
+         Gizmos.DrawRay(origin,vRight);
+         Gizmos.DrawRay(origin,vLeft);
+         Gizmos.DrawRay(top,vRight);
+         Gizmos.DrawRay(top,vLeft);
+
+         Gizmos.DrawLine(top,origin);
+         Gizmos.DrawLine(origin + vLeft, top + vLeft);
+         Gizmos.DrawLine(origin + vRight, top + vRight);
+         */
         
         /*
          *  WE COULD'VE SIMPLIFIED ALL THIS BY:
@@ -102,34 +103,38 @@ public class WedgeTrigger : MonoBehaviour
          *  >   <
          */
         
+            
 
     }
 
     void DrawConeGizmo()
     {   
         float half = angle * 0.5f;
-        Vector3 vLeftDir = new Vector3(-half, 0, half);
-        Vector3 vRightDir = new Vector3(half, 0, -half);
+        Vector3 vLeftDir  = Quaternion.AngleAxis(-half, Vector3.up) * Vector3.forward; 
+        Vector3 vRightDir = Quaternion.AngleAxis( half, Vector3.up) * Vector3.forward; 
+        
         Vector3 vLeftOuter = vLeftDir * radiusOuter;
         Vector3 vRightOuter = vRightDir * radiusOuter;
         Vector3 vLeftInner = vLeftDir * radiusInner;
         Vector3 vRightInner = vRightDir * radiusInner;
         
         
-        
-
         void SetGizmoMatrix(Matrix4x4 m) => Gizmos.matrix = Handles.matrix = m;
+        //Horizontal
         Matrix4x4 prevMtx = Gizmos.matrix;
-        // draw the rotated Gizmo
-        SetGizmoMatrix(Gizmos.matrix *Matrix4x4.TRS(default,Quaternion.Euler(0,0,90),Vector3.one));
+        SetGizmoMatrix(transform.localToWorldMatrix); 
+        DrawFlatWedge();
+        SetGizmoMatrix(prevMtx);
+        //Vertical
+        SetGizmoMatrix(transform.localToWorldMatrix *Matrix4x4.TRS(default, Quaternion.Euler(0,0,90), Vector3.one));
         DrawFlatWedge();
         SetGizmoMatrix(prevMtx);
         
 
         void DrawFlatWedge()
         {
-            Handles.DrawWireArc(default,Vector3.up,vLeftOuter,angle, radiusOuter);
-            Handles.DrawWireArc(default,Vector3.up,vLeftInner,angle, radiusInner);
+            Handles.DrawWireArc(Vector3.zero,Vector3.up,vLeftDir,angle, radiusOuter);
+            Handles.DrawWireArc(Vector3.zero,Vector3.up,vLeftDir,angle, radiusInner);
             Gizmos.DrawLine(vLeftInner,vLeftOuter);
             Gizmos.DrawLine(vRightInner,vRightOuter);
         }
