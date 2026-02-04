@@ -1582,8 +1582,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57fe0aa4b5d8354b839572289ce92bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Clock
-  secondsTest: 18.5
-  tickSizeSecMin: 0.0146
+  secondsTest: 5.510008
+  tickSizeSecMin: 0.07711999
+  tickSizeHours: 0.1593
 --- !u!4 &989140591
 Transform:
   m_ObjectHideFlags: 0

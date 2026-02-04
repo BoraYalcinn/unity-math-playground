@@ -36,6 +36,8 @@ public class Clock : MonoBehaviour
         
         DateTime time = DateTime.Now;
         DrawHand(SecondsOrMinutesToDirection(time.Second), 0.9f,1,Color.red);
+        DrawHand(SecondsOrMinutesToDirection(time.Minute), 0.7f,4,Color.white);
+        DrawHand(SecondsOrMinutesToDirection(time.Hour), 0.5f,8,Color.white);
         
         
         // Gizmos.DrawRay(default,radius * SecondsOrMinutesToDirection(secondsTest));
