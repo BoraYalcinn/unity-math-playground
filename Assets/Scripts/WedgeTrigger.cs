@@ -20,29 +20,19 @@ public class WedgeTrigger : MonoBehaviour
     public enum Shape
     {
         Wedge,
-        Spherical
+        Spherical,
+        Cone
     }
     
     public Shape shape = Shape.Wedge;
     
     void OnDrawGizmos()
     {
-        Vector3 origin = transform.position;
-        Vector3 up = transform.up;
-
-        Vector3 top = origin + up * height;
-        
-
-        float half = angle * 0.5f;
-        
-        Vector3 leftDir  = Quaternion.AngleAxis(-half, up) * transform.forward;
-        Vector3 rightDir = Quaternion.AngleAxis( half, up) * transform.forward;
-        
-        bool isInside = Contains(target.position);
+        bool isInside = target != null && Contains(target.position); // FIX: null safety (editor error)
         Color c = isInside ? Color.red : Color.green;
         Gizmos.color = c;
         Handles.color = c;
-        
+
         DrawConeGizmo();
          
          
@@ -183,9 +173,10 @@ public class WedgeTrigger : MonoBehaviour
     {
         switch (shape)
         {
-            case Shape.Wedge: return WedgeContains(position);
+            case Shape.Wedge:     return WedgeContains(position);
             case Shape.Spherical: return SphereContains(position);
-            default: throw new NotImplementedException();
+            case Shape.Cone:      return ConeContains(position); // FIX: Cone now reachable
+            default:              return false; // FIX: avoid editor exceptions
         }
         
         
