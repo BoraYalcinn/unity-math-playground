@@ -2947,10 +2947,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WedgeTrigger
   target: {fileID: 1986204872}
-  radiusOuter: 1.79
-  radiusInner: 0.77
-  height: 1.19
-  angle: 87.1
+  radiusOuter: 2.25
+  radiusInner: 0.56
+  height: 1.52
+  angle: 56.3
+  shape: 0
 --- !u!4 &1603210817
 Transform:
   m_ObjectHideFlags: 0
@@ -3405,7 +3406,7 @@ Transform:
   m_GameObject: {fileID: 1986204871}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.75, y: 0.004, z: 1.663}
+  m_LocalPosition: {x: 2.239, y: 0.175, z: 1.947}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
