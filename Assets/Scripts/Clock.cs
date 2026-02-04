@@ -36,13 +36,21 @@ public class Clock : MonoBehaviour
         
     }
     
-    Vector3 SecondsOrMinutesToDirection(float secOrMin)
+    Vector2 HoursToDirection(float hours) => ValueToDirection(hours, 12);
+    
+    Vector2 SecondsOrMinutesToDirection(float secOrMin)
     {
-        float t = secOrMin / 60; // percent along the 0-60 range (1-0 representation)
+        return ValueToDirection(secOrMin,60);
+        
+        // float t = secOrMin / 60; // percent along the 0-60 range (1-0 representation)
+        // return FractionToClockDir(t);
+    }
+
+    Vector2 ValueToDirection(float value, float valueMax)
+    {
+        float t = value / valueMax; // percent along the 0-60 range (1-0 representation)
         return FractionToClockDir(t);
     }
-    
-    
     
     
     Vector2 FractionToClockDir(float t)
