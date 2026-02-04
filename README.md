@@ -38,9 +38,7 @@ And as the learning sources I have used Freya Holmer ,3Blue1Brown and mostly my 
 
 * 1- Inner Radius For WedgeTrigger
 * 2- Spherical Sector Implementation For WedgeTrigger
-* 3- Clock // TODO
-* 4- Mouse Look // TODO
-* 5- Turret Yaw Modifier // TODO
+* 3- Clock 
 
 ----
 ## Part-4
