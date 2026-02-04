@@ -9,6 +9,8 @@ public class Clock : MonoBehaviour
     
     [Range(0,0.2f)]
     public float tickSizeSecMin = 0.05f;
+    [Range(0,0.2f)]
+    public float tickSizeHours = 0.05f;
     
     public const float radius = 1;
     
@@ -23,7 +25,12 @@ public class Clock : MonoBehaviour
             Vector2 dir = SecondsOrMinutesToDirection(i);
             DrawTick(dir,tickSizeSecMin,1);
         }
-        
+        // ticks (hours)
+        for (int i = 0; i < 12; i++)
+        {
+            Vector2 dir = HoursToDirection(i);
+            DrawTick(dir,tickSizeHours,3);
+        }
         
         Gizmos.DrawRay(default,radius * SecondsOrMinutesToDirection(secondsTest));
     }
