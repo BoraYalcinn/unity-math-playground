@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using System;
 
 public class Clock : MonoBehaviour
 {
@@ -31,8 +32,13 @@ public class Clock : MonoBehaviour
             Vector2 dir = HoursToDirection(i);
             DrawTick(dir,tickSizeHours,3);
         }
+        // hands
         
-        Gizmos.DrawRay(default,radius * SecondsOrMinutesToDirection(secondsTest));
+        DateTime time = DateTime.Now;
+        DrawHand(SecondsOrMinutesToDirection(time.Second), 0.9f,1,Color.red);
+        
+        
+        // Gizmos.DrawRay(default,radius * SecondsOrMinutesToDirection(secondsTest));
     }
     
     Vector2 AngToDir(float angleRad) => new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
@@ -41,6 +47,12 @@ public class Clock : MonoBehaviour
     {
         Handles.DrawLine(dir,dir * (1f - length),thickness);
         
+    }
+
+    void DrawHand(Vector2 dir, float length, float thickness,Color color)
+    {
+        using (new Handles.DrawingScope(color)) 
+        Handles.DrawLine(default,dir * length,thickness );
     }
     
     Vector2 HoursToDirection(float hours) => ValueToDirection(hours, 12);
