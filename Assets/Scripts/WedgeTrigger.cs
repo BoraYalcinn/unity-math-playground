@@ -16,24 +16,36 @@ public class WedgeTrigger : MonoBehaviour
     [Range(0,180)]
     public float angle = 90f;
     
+    // for freya holmers contains implementation
+    public enum Shape
+    {
+        Wedge,
+        Spherical
+    }
+    
+    public Shape shape = Shape.Wedge;
+    
     void OnDrawGizmos()
     {
         Vector3 origin = transform.position;
         Vector3 up = transform.up;
 
         Vector3 top = origin + up * height;
-
-        bool isInside = Contains(target.position);
-        Color c = isInside ? Color.red : Color.green;
-        Gizmos.color = c;
-        Handles.color = c;
+        
 
         float half = angle * 0.5f;
         
         Vector3 leftDir  = Quaternion.AngleAxis(-half, up) * transform.forward;
         Vector3 rightDir = Quaternion.AngleAxis( half, up) * transform.forward;
         
-         DrawConeGizmo();
+        bool isInside = Contains(target.position);
+        Color c = isInside ? Color.red : Color.green;
+        Gizmos.color = c;
+        Handles.color = c;
+        
+        DrawConeGizmo();
+         
+         
          /*
           
          // Outer and Inner wedge vectors
@@ -103,11 +115,9 @@ public class WedgeTrigger : MonoBehaviour
          *  >   <
          */
         
-            
-
     }
 
-    void DrawConeGizmo()
+    public void DrawConeGizmo()
     {   
         float half = angle * 0.5f;
         
@@ -169,19 +179,31 @@ public class WedgeTrigger : MonoBehaviour
         
     }
     
-    bool Contains(Vector3 position)
-    {   
+    public bool Contains(Vector3 position)
+    {
+        switch (shape)
+        {
+            case Shape.Wedge: return WedgeContains(position);
+            case Shape.Spherical: return SphereContains(position);
+            default: throw new NotImplementedException();
+        }
+        
+        
+        /*
         Vector3 origin = transform.position;   
         Vector3 toPoint = position - origin;
          
+		Vector3 local = transform.InverseTransformPoint(position);
         
         // height check
-        float h = Vector3.Dot(toPoint, transform.up);
+        // float h = Vector3.Dot(toPoint, transform.up);
+		float h = local.z;
         if (h < 0 || h > height)
             return false;
 
         // radial check
-        Vector3 radial = toPoint - transform.up * h;
+        // Vector3 radial = toPoint - transform.up * h;
+        Vector3 radial = new Vector3(local.x, 0f, local.z);
         float distSq = radial.sqrMagnitude;
 
         if (distSq < radiusInner * radiusInner || distSq > radiusOuter * radiusOuter)
@@ -198,7 +220,61 @@ public class WedgeTrigger : MonoBehaviour
         }
 
         return true;
+        */
         
+    }
+    
+    
+    
+    public bool SphereContains(Vector3 position)
+    {
+        float distance = Vector3.Distance(transform.position,position);
+        return distance >= radiusInner && distance <= radiusOuter;
+    }
+
+    public bool ConeContains(Vector3 position)
+    {
+        if (SphereContains(position) == false) return false;
+        Vector3 dirToTarget = (position - transform.position).normalized;
+
+        float angleRad = Mathf.Acos(Vector3.Dot(transform.forward, dirToTarget)) * Mathf.Rad2Deg;
+        return angleRad < angle / 2;
+    }
+    
+    
+    // NEW WEDGECONTAINS IMPLEMENTED FROM FREYA HOLMERS EXAMPLES MINE WASN'T WORKING PERFECTLY AFTER IMPROVING THE TURRET SIGHT
+    public bool WedgeContains(Vector3 position)
+    {
+        // Vector3 vecToTargetWorld = position - transform.position;
+        Vector3 vecToTarget = transform.InverseTransformPoint(position);
+        
+        // height check
+        if (Mathf.Abs(vecToTarget.y) > height * 0.5f)
+        {
+            return false;
+        }
+        
+        // angular check
+        Vector3 flatDirToTarget = vecToTarget;
+        flatDirToTarget.y = 0f;
+
+        float flatDistance = flatDirToTarget.magnitude;
+        
+        if (flatDistance > 0f)
+        {
+            flatDirToTarget.Normalize();
+
+            float cosHalf = Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad);
+            float dot = Vector3.Dot(flatDirToTarget, Vector3.forward);
+
+            if (dot < cosHalf)
+                return false;
+        }
+        
+        // radial test
+        if (flatDistance < radiusInner || flatDistance > radiusOuter)
+            return false;
+        return true;
     }
     
     
