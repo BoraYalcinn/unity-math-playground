@@ -48,6 +48,8 @@ And as the learning sources I have used Freya Holmer ,3Blue1Brown and mostly my 
 
 ### Examples Implemented:
 
-* 1-
+* 1- Triangle Detection
+* 3- Lerp Movements
+* 2- Health Bar
 
 ## Part -5
