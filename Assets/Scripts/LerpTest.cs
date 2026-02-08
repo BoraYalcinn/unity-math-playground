@@ -5,7 +5,9 @@ public class LerpTest : MonoBehaviour
     [Range(0f, 1f)] public float t = 0;
     public Transform aTf;
     public Transform bTf;
-
+    public Color colorA;
+    public Color colorB;
+    
     void OnDrawGizmos()
     {
         Vector3 a = aTf.position;
@@ -14,7 +16,7 @@ public class LerpTest : MonoBehaviour
         Gizmos.DrawLine(a,b);
 
         Vector3 pos = Vector3.Lerp(a, b, t);
-        
+        Gizmos.color = Color.Lerp(colorA, colorB, t);
         Gizmos.DrawSphere(pos,0.05f);
         
     }
