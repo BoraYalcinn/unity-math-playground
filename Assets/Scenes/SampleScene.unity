@@ -531,7 +531,7 @@ Transform:
   m_GameObject: {fileID: 503881159}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.644, y: -0.21, z: 0}
+  m_LocalPosition: {x: -1.18, y: -0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1805,9 +1805,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c297fcbaeb94b1b4f826671b603827fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LerpTest
-  t: 0.435
+  t: 0.898
   aTf: {fileID: 503881160}
   bTf: {fileID: 1749459670}
+  colorA: {r: 0.9607843, g: 0, b: 0.018073073, a: 1}
+  colorB: {r: 0.3050177, g: 1, b: 0, a: 1}
 --- !u!4 &990095921
 Transform:
   m_ObjectHideFlags: 0
@@ -3597,7 +3599,7 @@ Transform:
   m_GameObject: {fileID: 1749459669}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.401, y: 0.021, z: 0}
+  m_LocalPosition: {x: 0.448, y: -0.228, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
