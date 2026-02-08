@@ -28,6 +28,7 @@ public class TriangleTesting : MonoBehaviour
         return a.x * b.y - a.y * b.x ;
     }
     
+    // we can think of it like a Venn Diagram
     public bool TriangleContains(Vector2 a, Vector2 b, Vector2 c,Vector2 pt)
     {
 
