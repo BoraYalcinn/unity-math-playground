@@ -42,4 +42,12 @@ And as the learning sources I have used Freya Holmer ,3Blue1Brown and mostly my 
 
 ----
 ## Part-4
-*
+
+* Interpolation
+* Point Physics
+
+### Examples Implemented:
+
+* 1-
+
+## Part -5
